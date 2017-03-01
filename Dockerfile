@@ -16,7 +16,7 @@ RUN mkdir -p /usr/src/app \
     ## For the build of node
     && curl -sL https://raw.githubusercontent.com/martinheidegger/install-node/master/install_node.sh | \
        NODE_VERSION="v7.6.0" \
-       YARN_VERSION="v0.20.3" \
+       YARN_VERSION="v0.21.3" \
        NODE_VARIANT="make" \
        bash \
     && rm -rf /var/lib/apt/lists/* /usr/share/doc /usr/share/perl* /usr/share/man || true
