@@ -9,11 +9,7 @@ if [ -z "${YARN_VERSION}" ]; then
   exit 1
 fi
 
-evil_git_dirty() {
-  [[ $(git diff --shortstat 2> /dev/null | tail -n1) != "" ]] && echo "*"
-}
-
-if [ evil_git_dirty ]; then
+if [[ -n $(git status --porcelain) ]]; then
   echo "GIT Dirty!"
   exit 1
 fi
@@ -48,7 +44,7 @@ RUN mkdir -p /usr/src/app \
 DOCKERFILE > Dockerfile
 
 git add Dockerfile
-if [ evil_git_dirty ]; then
+if [[ -n $(git status --porcelain) ]]; then
   git commit -m "Updated Node & Yarn version"
   git push -u origin "v${NODE_VERSION}"
 fi
