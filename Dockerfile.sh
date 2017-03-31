@@ -16,9 +16,7 @@ fi
 
 git checkout -b "v${NODE_VERSION}" 2>/dev/null || git checkout "v${NODE_VERSION}"
 
-git status
-
-Dockerfile=<< DOCKERFILE
+read -r -d '' Dockerfile << DOCKERFILE
 
 FROM alpine:3.4
 
