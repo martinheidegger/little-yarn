@@ -16,6 +16,8 @@ fi
 
 git checkout -b "v${NODE_VERSION}" 2>/dev/null || git checkout "v${NODE_VERSION}"
 
+git status
+
 Dockerfile=<< DOCKERFILE
 
 FROM alpine:3.4
@@ -43,11 +45,13 @@ RUN mkdir -p /usr/src/app \
 
 DOCKERFILE
 
+echo "${Dockerfile}"
+
 echo "${Dockerfile}" > Dockerfile
 
 git add Dockerfile
 if [[ -n $(git status --porcelain) ]]; then
   git commit -m "Updated Node & Yarn version"
-  git push -u origin "v${NODE_VERSION}"
+  git push -f -u origin "v${NODE_VERSION}"
 fi
 
