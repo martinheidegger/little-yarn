@@ -14,9 +14,9 @@ if [[ -n $(git status --porcelain) ]]; then
   exit 1
 fi
 
-git checkout -b "v${NODE_VERSION}"
+git checkout -b "v${NODE_VERSION}" 2>/dev/null || git checkout "v${NODE_VERSION}"
 
-cat <<DOCKERFILE
+Dockerfile=<< DOCKERFILE
 
 FROM alpine:3.4
 
@@ -41,7 +41,9 @@ RUN mkdir -p /usr/src/app \
        bash \
     && rm -rf /var/lib/apt/lists/* /usr/share/doc /usr/share/perl* /usr/share/man || true
 
-DOCKERFILE > Dockerfile
+DOCKERFILE
+
+echo "${Dockerfile}" > Dockerfile
 
 git add Dockerfile
 if [[ -n $(git status --porcelain) ]]; then
