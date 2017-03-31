@@ -9,5 +9,14 @@ ENV BUNDLE_PATH=/usr/local/bundle
 # NOTE: gcc, g++ and libc-dev for json gem
 # NOTE: linux-headers for raindrops gem
 # NOTE: bash for ci
-RUN mkdir -p /usr/src/app     && apk update     && apk add --no-cache make bash gcc g++ man linux-headers curl git openssl openssh-client                           python binutils-gold linux-headers gnupg libgcc     ## For the build of node
-    && curl -sL https://raw.githubusercontent.com/martinheidegger/install-node/master/install_node.sh |        NODE_VERSION="v6.10.1"        YARN_VERSION="v0.21.3"        NODE_VARIANT="make"        bash     && rm -rf /var/lib/apt/lists/* /usr/share/doc /usr/share/perl* /usr/share/man || true
+RUN mkdir -p /usr/src/app \
+    && apk update \
+    && apk add --no-cache make bash gcc g++ man linux-headers curl git openssl openssh-client \
+                          python binutils-gold linux-headers gnupg libgcc \
+    ## For the build of node
+    && curl -sL https://raw.githubusercontent.com/martinheidegger/install-node/master/install_node.sh | \
+       NODE_VERSION="v6.10.1" \
+       YARN_VERSION="v0.21.3" \
+       NODE_VARIANT="make" \
+       bash \
+    && rm -rf /var/lib/apt/lists/* /usr/share/doc /usr/share/perl* /usr/share/man || true
