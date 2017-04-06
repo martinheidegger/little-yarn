@@ -15,7 +15,7 @@ RUN mkdir -p /usr/src/app \
        # Installing git npm dependencies
        git \
        # Runtime dependency used by node for ssl & crypto operations
-       mgnupg openssl openssh-client 
+       gnupg openssl openssh-client 
     # Building the exact node & yarn version
     && curl -sL https://raw.githubusercontent.com/martinheidegger/install-node/master/install_node.sh | \
        NODE_VERSION="v7.6.0" \
