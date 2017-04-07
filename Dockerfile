@@ -23,7 +23,7 @@ RUN mkdir -p /usr/src/app \
        NODE_VARIANT="make" \
        bash \
     # Curl not needed after the installation
-    && apk remove curl \
+    && apk del curl \
     # Clearing the installation (Don't result in error)
     && (rm -rf \
        /var/lib/apt/lists/* \
