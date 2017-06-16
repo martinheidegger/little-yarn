@@ -1,20 +1,13 @@
 #!/bin/bash
 
-if [ -z "${NODE_VERSION}" ]; then
-  echo "NODE_VERSION environment variable required"
-  exit 1
-fi
-if [ -z "${YARN_VERSION}" ]; then
-  echo "YARN_VERSION environment variable required"
-  exit 1
-fi
+NODE_VERSION="${git rev-parse --abbrev-ref HEAD}"
 
 if [[ -n $(git status --porcelain) ]]; then
   echo "GIT Dirty!"
   exit 1
 fi
 
-git checkout -b "v${NODE_VERSION}" 2>/dev/null || git checkout "v${NODE_VERSION}"
+git checkout -b "${NODE_VERSION}" 2>/dev/null || git checkout "${NODE_VERSION}"
 
 read -r -d '' Dockerfile << DOCKERFILE
 
@@ -35,8 +28,7 @@ RUN mkdir -p /usr/src/app \\
                           python binutils-gold linux-headers gnupg libgcc \\
     ## For the build of node
     && curl -sL https://raw.githubusercontent.com/martinheidegger/install-node/master/install_node.sh | \\
-       NODE_VERSION="v${NODE_VERSION}" \\
-       YARN_VERSION="v${YARN_VERSION}" \\
+       NODE_VERSION="${NODE_VERSION}" \\
        NODE_VARIANT="make" \\
        bash \\
     && rm -rf /var/lib/apt/lists/* /usr/share/doc /usr/share/perl* /usr/share/man || true
@@ -49,7 +41,7 @@ echo "${Dockerfile}" > Dockerfile
 
 git add Dockerfile
 if [[ -n $(git status --porcelain) ]]; then
-  git commit -m "Updated Node & Yarn version"
-  git push -f -u origin "v${NODE_VERSION}"
+  git commit -m "Updated Dockerfile"
+  git push -f -u origin "${NODE_VERSION}"
 fi
 
