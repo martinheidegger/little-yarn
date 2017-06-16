@@ -1,6 +1,6 @@
 #!/bin/bash
 
-NODE_VERSION="${git rev-parse --abbrev-ref HEAD}"
+NODE_VERSION="$(git rev-parse --abbrev-ref HEAD)"
 
 if [[ -n $(git status --porcelain) ]]; then
   echo "GIT Dirty!"
